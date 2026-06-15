@@ -3,114 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PraktikumSubmit - Selamat Datang</title>
+    <title>PraktikumSubmit</title>
     <link rel="stylesheet" href="/css/style.css">
-    <!-- Google Font (Outfit) -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        .portal-container {
+        body {
+            background-color: #f3f4f6;
+            color: #1f2937;
+            font-family: 'Inter', -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
             display: flex;
-            gap: 2rem;
-            width: 100%;
-            max-width: 900px;
-            margin: 2rem auto;
             justify-content: center;
-            flex-wrap: wrap;
+            align-items: center;
+            min-height: 100vh;
         }
-        .portal-card {
-            flex: 1;
-            min-width: 280px;
-            max-width: 400px;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-radius: 24px;
-            padding: 3rem 2rem;
+        .container {
+            max-width: 800px;
+            width: 90%;
+            margin: 0 auto;
             text-align: center;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            text-decoration: none;
-            color: var(--text-main);
+        }
+        h1 {
+            font-size: 2.25rem;
+            color: #111827;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        p.subtitle {
+            color: #4b5563;
+            margin-bottom: 2.5rem;
+            font-size: 1.1rem;
+        }
+        .portal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: left;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
-        .portal-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--primary);
-            box-shadow: 0 12px 40px 0 rgba(99, 102, 241, 0.2);
-        }
-        .portal-icon {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            transition: transform 0.3s ease;
-        }
-        .portal-card:hover .portal-icon {
-            transform: scale(1.1);
-        }
-        .portal-title {
-            font-size: 1.5rem;
-            font-weight: 800;
+        .card h2 {
+            font-size: 1.25rem;
+            margin-top: 0;
             margin-bottom: 0.75rem;
+            color: #1f2937;
         }
-        .portal-desc {
-            color: var(--text-muted);
+        .card p {
+            color: #4b5563;
             font-size: 0.95rem;
             line-height: 1.5;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             flex-grow: 1;
         }
-        .portal-btn {
-            width: 100%;
-            padding: 0.85rem;
-            border-radius: 12px;
-            font-weight: 600;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--card-border);
-            transition: background 0.3s ease, color 0.3s ease;
-        }
-        .portal-card:hover .portal-btn {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-        .welcome-title {
+        .btn-link {
+            display: inline-block;
             text-align: center;
-            margin-bottom: 3rem;
+            padding: 0.75rem 1.5rem;
+            background-color: #2563eb;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: background-color 0.2s;
         }
-        .welcome-title h1 {
-            font-size: 3rem;
-            background: linear-gradient(to right, #818cf8, #c084fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .btn-link:hover {
+            background-color: #1d4ed8;
+        }
+        .btn-secondary-link {
+            background-color: #4b5563;
+        }
+        .btn-secondary-link:hover {
+            background-color: #374151;
         }
     </style>
 </head>
-<body class="flex-center" style="padding: 2rem;">
+<body>
 
-    <div style="width: 100%;">
-        <div class="welcome-title">
-            <h1>PraktikumSubmit</h1>
-            <p style="color: var(--text-muted); font-size: 1.1rem; margin-top: 8px;">Portal Pengumpulan & Manajemen Tugas Praktikum</p>
-        </div>
+    <div class="container">
+        <h1>PraktikumSubmit</h1>
+        <p class="subtitle">Portal Pengumpulan & Manajemen Tugas Praktikum</p>
 
-        <div class="portal-container">
-            <!-- Student Portal -->
-            <a href="/submit.html" class="portal-card">
-                <div class="portal-icon">🎓</div>
-                <div class="portal-title">Portal Mahasiswa</div>
-                <div class="portal-desc">Kumpulkan file tugas praktikum Anda secara cepat ke dalam cloud storage. Pastikan NIM dan data diri Anda sudah benar.</div>
-                <div class="portal-btn">Masuk Portal</div>
-            </a>
+        <div class="portal-grid">
+            <div class="card">
+                <h2>Portal Mahasiswa</h2>
+                <p>Kumpulkan file tugas praktikum Anda secara cepat ke dalam cloud storage. Pastikan NIM dan nama Anda sudah sesuai.</p>
+                <a href="/submit.html" class="btn-link">Masuk Portal</a>
+            </div>
 
-            <!-- Admin Portal -->
-            <a href="/admin-login.html" class="portal-card">
-                <div class="portal-icon">🛡️</div>
-                <div class="portal-title">Portal Admin / Dosen</div>
-                <div class="portal-desc">Pantau semua berkas tugas mahasiswa yang telah dikumpulkan, cek status validasi otomatis, dan unduh berkas tugas mahasiswa.</div>
-                <div class="portal-btn">Login Admin</div>
-            </a>
+            <div class="card">
+                <h2>Portal Admin / Dosen</h2>
+                <p>Lihat daftar semua pengumpulan tugas mahasiswa, cek status otomatis Azure Functions, dan unduh berkas secara langsung.</p>
+                <a href="/list.html" class="btn-link btn-secondary-link">Masuk Portal</a>
+            </div>
         </div>
     </div>
 
