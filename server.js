@@ -13,14 +13,45 @@ const upload = multer({
     }
 });
 
+// Helper to parse cookies
+const parseCookies = (cookieHeader) => {
+    const list = {};
+    if (!cookieHeader) return list;
+    cookieHeader.split(';').forEach(cookie => {
+        const parts = cookie.split('=');
+        list[parts.shift().trim()] = decodeURI(parts.join('='));
+    });
+    return list;
+};
+
+// Middleware to protect admin routes
+const checkAdminAuth = (req, res, next) => {
+    const cookies = parseCookies(req.headers.cookie);
+    if (cookies.admin_auth === 'authenticated') {
+        next();
+    } else {
+        if (req.xhr || (req.headers.accept && req.headers.accept.includes('json')) || req.path.startsWith('/api/')) {
+            res.status(401).json({ error: 'Unauthorized' });
+        } else {
+            res.redirect('/admin-login.html');
+        }
+    }
+};
+
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Protect admin HTML page before serving static files
+app.get('/list.html', checkAdminAuth, (req, res, next) => {
+    next();
+});
+
 app.use(express.static('public'));
 
-// Serve home page redirecting to submit-task UI
+// Serve home page
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'submit.html'));
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Endpoint: Submit Task
@@ -82,7 +113,7 @@ app.post('/submit-task', upload.single('file_tugas'), async (req, res) => {
                     <p class="note-text">Catatan: Azure Functions akan memvalidasi file Anda dan mengubah status menjadi "Submitted" beberapa saat lagi.</p>
                     <div class="btn-group">
                         <a href="/submit.html" class="btn btn-primary">Kumpulkan Lagi</a>
-                        <a href="/list.html" class="btn btn-secondary">Lihat Daftar Tugas</a>
+                        <a href="/" class="btn btn-secondary">Kembali ke Beranda</a>
                     </div>
                 </div>
             </body>
@@ -98,8 +129,29 @@ app.post('/submit-task', upload.single('file_tugas'), async (req, res) => {
     }
 });
 
-// API Endpoint: Get All submissions
-app.get('/api/tasks', async (req, res) => {
+// Endpoint: Admin Login Verification
+app.post('/admin-login', (req, res) => {
+    const { password } = req.body;
+    const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
+
+    if (password === adminPassword) {
+        // Set HTTP-Only Cookie
+        res.setHeader('Set-Cookie', 'admin_auth=authenticated; Path=/; HttpOnly; SameSite=Lax');
+        res.redirect('/list.html');
+    } else {
+        res.redirect('/admin-login.html?error=1');
+    }
+});
+
+// Endpoint: Admin Logout
+app.get('/admin-logout', (req, res) => {
+    // Clear auth cookie
+    res.setHeader('Set-Cookie', 'admin_auth=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0');
+    res.redirect('/');
+});
+
+// API Endpoint: Get All submissions (Protected)
+app.get('/api/tasks', checkAdminAuth, async (req, res) => {
     try {
         const [rows] = await db.query('SELECT * FROM submissions ORDER BY submitted_at DESC');
         res.json(rows);
