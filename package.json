@@ -1,0 +1,20 @@
+{
+  "name": "praktikum-submit",
+  "version": "1.0.0",
+  "description": "Aplikasi PraktikumSubmit menggunakan Azure Cloud Service",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "@azure/storage-blob": "^12.32.0",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.2",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.22.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

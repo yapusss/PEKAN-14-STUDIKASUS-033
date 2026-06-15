@@ -1,0 +1,14 @@
+{
+  "name": "azure-functions-praktikum",
+  "version": "1.0.0",
+  "description": "Azure Functions for processing new submissions",
+  "main": "src/functions/*.js",
+  "scripts": {
+    "start": "func start",
+    "test": "echo \"No tests specified\""
+  },
+  "dependencies": {
+    "@azure/functions": "^4.0.0",
+    "mysql2": "^3.12.0"
+  }
+}

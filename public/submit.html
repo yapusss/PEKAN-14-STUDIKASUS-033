@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PraktikumSubmit - Pengumpulan Tugas</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <!-- Google Font (Outfit) -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="logo">PraktikumSubmit</div>
+      <nav>
+        <a href="/submit.html" class="active">Kumpul Tugas</a>
+        <a href="/list.html">Daftar Pengumpulan</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="glass-card">
+        <h1>Kumpulkan Tugas Praktikum</h1>
+        <p class="subtitle">
+          Silakan isi formulir dengan lengkap dan unggah file tugas Anda ke
+          cloud server.
+        </p>
+
+        <form
+          action="/submit-task"
+          method="POST"
+          enctype="multipart/form-data"
+          id="submitForm"
+        >
+          <div class="form-group">
+            <label for="nim">Nomor Induk Mahasiswa (NIM)</label>
+            <input
+              type="text"
+              id="nim"
+              name="nim"
+              placeholder="NIM"
+              required
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="name">Nama Lengkap</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Nama Lengkap"
+              required
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="class_name">Kelas</label>
+            <select id="class_name" name="class_name" required>
+              <option value="" disabled selected>Pilih kelas Anda</option>
+              <option value="4TRPL2A">TRPL 2A</option>
+              <option value="4TRPL2B">TRPL 2B</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="course">Mata Kuliah</label>
+            <select id="course" name="course" required>
+              <option value="" disabled selected>Pilih mata kuliah</option>
+              <option value="Cloud Computing">Cloud Computing</option>
+              <option value="Pemrograman Web Lanjut">
+                Pemrograman Web Lanjut
+              </option>
+              <option value="Rekayasa Perangkat Lunak">
+                Rekayasa Perangkat Lunak
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>File Tugas</label>
+            <div class="file-upload-wrapper" id="dropZone">
+              <span class="upload-icon">📁</span>
+              <span class="upload-text" id="uploadText"
+                >Klik atau Seret file ke sini</span
+              >
+              <span
+                class="upload-text"
+                style="font-size: 0.75rem; margin-top: 4px"
+                >(PDF, ZIP, DOCX - Maks 10MB)</span
+              >
+              <input
+                type="file"
+                id="file_tugas"
+                name="file_tugas"
+                accept=".pdf,.zip,.docx"
+                required
+              />
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">
+            Kirim Tugas Anda
+          </button>
+        </form>
+      </div>
+    </main>
+
+    <script>
+      const fileInput = document.getElementById("file_tugas");
+      const uploadText = document.getElementById("uploadText");
+      const dropZone = document.getElementById("dropZone");
+
+      fileInput.addEventListener("change", (e) => {
+        if (fileInput.files.length > 0) {
+          const file = fileInput.files[0];
+          uploadText.textContent = `File terpilih: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
+          dropZone.style.borderColor = "var(--success)";
+        } else {
+          uploadText.textContent = "Klik atau Seret file ke sini";
+          dropZone.style.borderColor = "var(--card-border)";
+        }
+      });
+    </script>
+  </body>
+</html>
